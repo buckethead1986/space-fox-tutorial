@@ -1,58 +1,62 @@
-import React, { Suspense } from "react";
-import { Canvas, useLoader } from "@react-three/fiber";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import "./styles.css";
+import { Canvas, useLoader, useFrame } from "@react-three/fiber";
+import { Environment, OrbitControls } from "@react-three/drei";
+import { Suspense, useRef } from "react";
+import { useGLTF } from "@react-three/drei";
+import Model from "./Model";
 
-// function Loading() {
-//   return (
-//     <mesh visible position={[0, 0, 0]} rotation={[0, 0, 0]}>
-//       <sphereGeometry attach="geometry" args={[1, 16, 16]} />
-//       <meshStandardMaterial
-//         attach="material"
-//         color="white"
-//         transparent
-//         opacity={0.6}
-//         roughness={1}
-//         metalness={0}
-//       />
-//     </mesh>
-//   );
-// }
+function Loading() {
+  return (
+    <mesh visible position={[0, 0, 0]} rotation={[0, 0, 0]}>
+      <sphereGeometry attach="geometry" args={[1, 16, 16]} />
+      <meshStandardMaterial
+        attach="material"
+        color="white"
+        transparent
+        opacity={0.6}
+        roughness={1}
+        metalness={0}
+      />
+    </mesh>
+  );
+}
+
+//  function Model() {
+//   const group = useRef();
+//   const { nodes, materials } = useGLTF("/Poimandres.gltf");
+//   useFrame(() => {
+//     console.log("working");
+//   });
 //
-// function ArWing() {
-//   const { nodes } = useLoader(GLTFLoader, "ship.gltf");
 //   return (
-//     <group>
-//       <mesh visible geometry={nodes.Default.geometry}>
-//         <meshStandardMaterial
-//           attach="material"
-//           color="white"
-//           roughness={0.3}
-//           metalness={0.3}
-//         />
-//       </mesh>
+//     <group ref={group} {...props} dispose={null} scale={0.4}>
+//       <mesh
+//         castShadow
+//         receiveShadow
+//         geometry={nodes.Curve007_1.geometry}
+//         material={materials["Material.001"]}
+//       />
+//       <mesh
+//         castShadow
+//         receiveShadow
+//         geometry={nodes.Curve007_2.geometry}
+//         material={materials["Material.002"]}
+//       />
 //     </group>
 //   );
 // }
-//
-// export default function App() {
-//   return (
-//     <Canvas style={{ background: "#171717" }}>
-//       <directionalLight intensity={0.5} />
-//       <Suspense fallback={<Loading />}>
-//         <ArWing />
-//       </Suspense>
-//     </Canvas>
-//   );
-// }
 
+// <Environment preset="sunset" background />
 export default function App() {
-  const gltf = useLoader(GLTFLoader, "/ship.gltf");
   return (
-    <Canvas>
-      <Suspense fallback={null}>
-        <primitive object={gltf.scene} />
-      </Suspense>
-    </Canvas>
+    <div className="App">
+      <Canvas style={{ background: "#171717" }}>
+        <directionalLight intensity={0.5} />
+        <Suspense fallback={<Loading />}>
+          <Model />
+          <OrbitControls />
+        </Suspense>
+      </Canvas>
+    </div>
   );
 }
