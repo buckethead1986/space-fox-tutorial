@@ -66,7 +66,7 @@
             "TEXCOORD_0": 6
           },
           "indices": 7,
-          "material": 1
+          "material": 0
         }
       ]
     }
