@@ -1,9 +1,18 @@
 import "./styles.css";
-import { Canvas, useLoader, useFrame } from "@react-three/fiber";
+import {
+  Canvas,
+  useLoader,
+  useFrame
+  // extend,
+  // useThree
+} from "@react-three/fiber";
 import { Environment, OrbitControls } from "@react-three/drei";
 import { Suspense, useRef, useState } from "react";
 import { useGLTF } from "@react-three/drei";
 import Model from "./Model";
+
+// import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+// extend({ OrbitControls });
 
 const GROUND_HEIGHT = -50;
 
@@ -43,6 +52,43 @@ function BoxShip() {
       ship.current.position.x = shipPosition.position.x;
     }
   });
+
+  //'Ship' with box body and 2 'ears' that move together.
+  // function MickeyMouseEarsBoxShip() {
+  //   return (
+  //     <mesh ref={ship}>
+  //       <mesh onClick={() => console.log(ship.current, shipPosition)}>
+  //         <boxBufferGeometry args={[1, 1, 1]} />
+  //         <meshStandardMaterial color={"#D90368"} />
+  //       </mesh>
+  //       {ship.current && (
+  //         <mesh>
+  //           <mesh
+  //             position={[
+  //               ship.current.position.x - 2,
+  //               ship.current.position.y + 2,
+  //               ship.current.position.z - 5
+  //             ]}
+  //           >
+  //             <sphereBufferGeometry args={[1, 16, 16]} />
+  //             <meshLambertMaterial attach="material" color={"green"} />
+  //           </mesh>
+  //           <mesh
+  //             position={[
+  //               ship.current.position.x + 2,
+  //               ship.current.position.y + 2,
+  //               ship.current.position.z - 5
+  //             ]}
+  //           >
+  //             <sphereBufferGeometry args={[1, 16, 16]} />
+  //             <meshLambertMaterial attach="material" color={"green"} />
+  //           </mesh>
+  //         </mesh>
+  //       )}
+  //     </mesh>
+  //   );
+  // }
+
   return (
     <mesh ref={ship} onClick={() => console.log(ship.current, shipPosition)}>
       <boxBufferGeometry args={[1, 1, 1]} />
@@ -76,6 +122,13 @@ function Terrain() {
   );
 }
 
+// const CameraControls = () => {
+//   const { camera, gl: { domElement } } = useThree();
+//   const controls = useRef();
+//   useFrame(state => controls.current.update());
+//   return <orbitControls ref={controls} args={[camera, domElement]} />;
+// };
+
 //environment presetd: sunset, dawn, night, warehouse, forest, apartment, studio, city, park, lobby
 // <Environment preset="sunset" background />
 // <Environment preset="forest" background />
@@ -84,6 +137,14 @@ export default function App() {
   return (
     <div className="App">
       <Canvas style={{ background: "#171717" }}>
+        <OrbitControls
+          enableZoom={false}
+          maxAzimuthAngle={Math.PI / 4}
+          maxPolarAngle={Math.PI}
+          minAzimuthAngle={-Math.PI / 4}
+          minPolarAngle={0}
+        />
+
         <directionalLight intensity={0.5} />
         <Suspense fallback={<Loading />}>
           <BoxShip />
