@@ -32,7 +32,7 @@ function Loading() {
   );
 }
 
-function BoxShip() {
+function BoxShip(props) {
   const [shipPosition, setShipPosition] = useState();
 
   const ship = useRef();
@@ -89,10 +89,12 @@ function BoxShip() {
   //   );
   // }
 
+  //better/correct way to set default value for 'color'?
+  //avoids error if no color set at start
   return (
-    <mesh ref={ship} onClick={() => console.log(ship.current, shipPosition)}>
+    <mesh ref={ship} onClick={() => props.setColor(props.color || "green")}>
       <boxBufferGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color={"#D90368"} />
+      <meshStandardMaterial color={props.color || "red"} />
     </mesh>
   );
 }
@@ -132,8 +134,13 @@ function Terrain() {
 //environment presetd: sunset, dawn, night, warehouse, forest, apartment, studio, city, park, lobby
 // <Environment preset="sunset" background />
 // <Environment preset="forest" background />
-// <OrbitControls />
 export default function App() {
+  const [color, setColor] = useState();
+
+  function changeColor() {
+    color === "green" ? setColor("blue") : setColor("green");
+  }
+
   return (
     <div className="App">
       <Canvas style={{ background: "#171717" }}>
@@ -147,7 +154,7 @@ export default function App() {
 
         <directionalLight intensity={0.5} />
         <Suspense fallback={<Loading />}>
-          <BoxShip />
+          <BoxShip color={color} setColor={changeColor} />
           <Model />
         </Suspense>
         <Terrain />
