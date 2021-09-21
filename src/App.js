@@ -31,6 +31,21 @@ function Loading() {
     </mesh>
   );
 }
+// function Loading() {
+//   return (
+//     <mesh visible position={[0, 0, 0]} rotation={[0, 0, 0]}>
+//       <sphereGeometry attach="geometry" args={[1, 16, 16]} />
+//       <meshStandardMaterial
+//         attach="material"
+//         color="white"
+//         transparent
+//         opacity={0.6}
+//         roughness={1}
+//         metalness={0}
+//       />
+//     </mesh>
+//   );
+// }
 
 function BoxShip(props) {
   const [shipPosition, setShipPosition] = useState();
@@ -123,6 +138,30 @@ function Terrain() {
     </mesh>
   );
 }
+// function Terrain() {
+//   const terrain = useRef();
+//
+//   useFrame(() => {
+//     terrain.current.position.z += 0.4;
+//   });
+//   return (
+//     <mesh
+//       visible
+//       position={[0, GROUND_HEIGHT, 0]}
+//       rotation={[-Math.PI / 2, 0, 0]}
+//       ref={terrain}
+//     >
+//       <planeBufferGeometry attach="geometry" args={[5000, 5000, 128, 128]} />
+//       <meshStandardMaterial
+//         attach="material"
+//         color="white"
+//         roughness={1}
+//         metalness={0}
+//         wireframe
+//       />
+//     </mesh>
+//   );
+// }
 
 // const CameraControls = () => {
 //   const { camera, gl: { domElement } } = useThree();
